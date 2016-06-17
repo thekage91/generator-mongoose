@@ -4,20 +4,21 @@ var util = require('util'),
     yeoman = require('yeoman-generator'),
     monty = require('./yo-ascii'),
     _s = require('underscore.string'),
-    mkdirp = require('mkdirp');
+    mkdirp = require('mkdirp'),
+    html_wiring = require("html-wiring");
 
 
 var MongooseGenerator = module.exports = function MongooseGenerator(args, options, config) {
-  yeoman.generators.Base.apply(this, arguments);
+  yeoman.Base.apply(this, arguments);
 
   this.on('end', function () {
     this.installDependencies({ skipInstall: options['skip-install'] });
   });
 
-  this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+  this.pkg = JSON.parse(html_wiring.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
-util.inherits(MongooseGenerator, yeoman.generators.Base);
+util.inherits(MongooseGenerator, yeoman.Base);
 
 MongooseGenerator.prototype.askFor = function askFor() {
   var cb = this.async();
